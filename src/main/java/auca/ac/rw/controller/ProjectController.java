@@ -14,9 +14,8 @@ public class ProjectController {
         return Map.of(
                 "project", "Tour Booking System with Rwanda Administrative Location Hierarchy",
                 "focus", "Users are linked to villages, and province queries traverse the full hierarchy.",
+                "dataMode", "No records are preloaded. Create your own test data through the CRUD endpoints.",
                 "mainEndpoints", List.of(
-                        "/api/demo/reset",
-                        "/api/demo/reset-and-seed",
                         "/api/locations/provinces",
                         "/api/locations/districts",
                         "/api/locations/sectors",

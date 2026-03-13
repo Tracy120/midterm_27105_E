@@ -1,0 +1,5 @@
+target/
+.m2/
+m2repo/
+temp_log4j_check/
+.mvn-settings.xml

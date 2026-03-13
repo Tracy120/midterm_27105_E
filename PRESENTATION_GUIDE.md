@@ -101,14 +101,14 @@ So the user is not saved directly with province.
 
 ### Retrieve Users By Province
 
-- `GET /api/users/by-province?provinceCode=PRV-901`
-- `GET /api/users/by-province?provinceName=Northern Province Demo`
+- `GET /api/users/by-province?provinceCode=<province-code>`
+- `GET /api/users/by-province?provinceName=<province-name>`
 
 ### Retrieve Users By Other Levels
 
-- `GET /api/users/by-location?cellCode=CEL-904`
-- `GET /api/users/by-location?districtCode=DST-905`
-- `GET /api/users/by-location?villageCode=VLG-907`
+- `GET /api/users/by-location?cellCode=<cell-code>`
+- `GET /api/users/by-location?districtCode=<district-code>`
+- `GET /api/users/by-location?villageCode=<village-code>`
 
 ## 5. Postman Order
 
@@ -143,25 +143,21 @@ So the user is not saved directly with province.
 15. `POST /api/bookings`
 16. `GET /api/bookings?page=0&size=5&sortBy=bookingDate&direction=desc`
 
-## 6. Current Real Data You Can Demo
+## 6. Data Setup Message
 
-### Users
+State this clearly during presentation:
 
-- `USR-901` -> `VLG-901` -> `CEL-901` -> `DST-901` -> `PRV-901`
-- `USR-902` -> `VLG-901` -> `CEL-901` -> `DST-901` -> `PRV-901`
-- `USR-903` -> `VLG-901` -> `CEL-901` -> `DST-901` -> `PRV-901`
-- `USR-904` -> `VLG-904` -> `CEL-904` -> `DST-904` -> `PRV-904`
-- `USR-905` -> `VLG-905` -> `CEL-905` -> `DST-905` -> `PRV-905`
-- `USR-906` -> `VLG-906` -> `CEL-906` -> `DST-906` -> `PRV-906`
-- `USR-907` -> `VLG-907` -> `CEL-907` -> `DST-907` -> `PRV-907`
+- The application does not ship with fixed demo records.
+- All data is created manually through the CRUD endpoints.
+- Postman variables or saved IDs are used only to chain requests after creation.
 
-### Good demo queries
+### Good demo queries after you create data
 
-- `GET /api/users/by-province?provinceCode=PRV-901`
-- `GET /api/users/by-location?cellCode=CEL-904`
-- `GET /api/users/by-location?districtCode=DST-905`
-- `GET /api/users/by-location?villageCode=VLG-907`
+- `GET /api/users/by-province?provinceCode=<province-code>`
+- `GET /api/users/by-location?cellCode=<cell-code>`
+- `GET /api/users/by-location?districtCode=<district-code>`
+- `GET /api/users/by-location?villageCode=<village-code>`
 
 ## 7. One-Sentence Viva Summary
 
-This project stores a user through the lowest Rwanda administrative level, village, and uses JPA relationships to resolve cell, sector, district, and province automatically for retrieval, filtering, pagination, sorting, and booking operations.
+This project stores each user at the village level and uses JPA relationships to resolve cell, sector, district, and province dynamically for retrieval, filtering, pagination, sorting, and booking operations.

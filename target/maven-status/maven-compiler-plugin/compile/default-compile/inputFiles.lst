@@ -28,7 +28,6 @@ C:\Users\pc\Documents\web tech\midterm\tour_booking\src\main\java\auca\ac\rw\con
 C:\Users\pc\Documents\web tech\midterm\tour_booking\src\main\java\auca\ac\rw\entity\AppUser.java
 C:\Users\pc\Documents\web tech\midterm\tour_booking\src\main\java\auca\ac\rw\repository\DistrictRepository.java
 C:\Users\pc\Documents\web tech\midterm\tour_booking\src\main\java\auca\ac\rw\service\UserService.java
-C:\Users\pc\Documents\web tech\midterm\tour_booking\src\main\java\auca\ac\rw\service\DemoDataService.java
 C:\Users\pc\Documents\web tech\midterm\tour_booking\src\main\java\auca\ac\rw\entity\Cell.java
 C:\Users\pc\Documents\web tech\midterm\tour_booking\src\main\java\auca\ac\rw\controller\LocationController.java
 C:\Users\pc\Documents\web tech\midterm\tour_booking\src\main\java\auca\ac\rw\repository\SectorRepository.java
@@ -40,15 +39,12 @@ C:\Users\pc\Documents\web tech\midterm\tour_booking\src\main\java\auca\ac\rw\rep
 C:\Users\pc\Documents\web tech\midterm\tour_booking\src\main\java\auca\ac\rw\dto\SectorPatchRequest.java
 C:\Users\pc\Documents\web tech\midterm\tour_booking\src\main\java\auca\ac\rw\dto\UserPatchRequest.java
 C:\Users\pc\Documents\web tech\midterm\tour_booking\src\main\java\auca\ac\rw\repository\ProvinceRepository.java
-C:\Users\pc\Documents\web tech\midterm\tour_booking\src\main\java\auca\ac\rw\controller\DemoController.java
 C:\Users\pc\Documents\web tech\midterm\tour_booking\src\main\java\auca\ac\rw\entity\TourGuide.java
-C:\Users\pc\Documents\web tech\midterm\tour_booking\src\main\java\auca\ac\rw\dto\DemoSeedResponse.java
 C:\Users\pc\Documents\web tech\midterm\tour_booking\src\main\java\auca\ac\rw\entity\BookingStatus.java
 C:\Users\pc\Documents\web tech\midterm\tour_booking\src\main\java\auca\ac\rw\entity\TourPackage.java
 C:\Users\pc\Documents\web tech\midterm\tour_booking\src\main\java\auca\ac\rw\dto\UserRequest.java
 C:\Users\pc\Documents\web tech\midterm\tour_booking\src\main\java\auca\ac\rw\service\TourPackageService.java
 C:\Users\pc\Documents\web tech\midterm\tour_booking\src\main\java\auca\ac\rw\controller\TourPackageController.java
-C:\Users\pc\Documents\web tech\midterm\tour_booking\src\main\java\auca\ac\rw\dto\DemoResetResponse.java
 C:\Users\pc\Documents\web tech\midterm\tour_booking\src\main\java\auca\ac\rw\dto\UserBookingSummary.java
 C:\Users\pc\Documents\web tech\midterm\tour_booking\src\main\java\auca\ac\rw\dto\CellPatchRequest.java
 C:\Users\pc\Documents\web tech\midterm\tour_booking\src\main\java\auca\ac\rw\dto\TourPackagePatchRequest.java

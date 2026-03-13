@@ -1,0 +1,270 @@
+{
+  "info": {
+    "_postman_id": "6d5bc159-03bf-4ced-9e7a-4aa6d6795ec7",
+    "name": "Tour Booking CRUD",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "if (!pm.collectionVariables.get('runSuffix')) pm.collectionVariables.set('runSuffix', Date.now().toString().slice(-6));",
+          "function plusDays(days){const d=new Date();d.setDate(d.getDate()+days);return d.toISOString().slice(0,10);}",
+          "pm.collectionVariables.set('travelDate1', plusDays(7));",
+          "pm.collectionVariables.set('travelDate2', plusDays(14));",
+          "pm.collectionVariables.set('travelDate3', plusDays(21));"
+        ]
+      }
+    }
+  ],
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080" },
+    { "key": "runSuffix", "value": "" },
+    { "key": "travelDate1", "value": "" },
+    { "key": "travelDate2", "value": "" },
+    { "key": "travelDate3", "value": "" },
+    { "key": "provinceId", "value": "" },
+    { "key": "districtId", "value": "" },
+    { "key": "sectorId", "value": "" },
+    { "key": "cellId", "value": "" },
+    { "key": "villageId", "value": "" },
+    { "key": "guide1Id", "value": "" },
+    { "key": "guide2Id", "value": "" },
+    { "key": "guide3Id", "value": "" },
+    { "key": "user1Id", "value": "" },
+    { "key": "user2Id", "value": "" },
+    { "key": "user3Id", "value": "" },
+    { "key": "package1Id", "value": "" },
+    { "key": "package2Id", "value": "" },
+    { "key": "package3Id", "value": "" },
+    { "key": "booking1Id", "value": "" },
+    { "key": "booking2Id", "value": "" },
+    { "key": "booking3Id", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "1. Locations",
+      "item": [
+        {
+          "name": "Create Province",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["const json = pm.response.json();", "pm.collectionVariables.set('provinceId', json.id);"] } }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"code\": \"PRV{{runSuffix}}\",\n  \"name\": \"Northern Demo {{runSuffix}}\"\n}" },
+            "url": "{{baseUrl}}/api/locations/provinces"
+          }
+        },
+        {
+          "name": "Create District",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["const json = pm.response.json();", "pm.collectionVariables.set('districtId', json.id);"] } }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"code\": \"DST{{runSuffix}}\",\n  \"name\": \"Gicumbi Demo {{runSuffix}}\",\n  \"provinceCode\": \"PRV{{runSuffix}}\"\n}" },
+            "url": "{{baseUrl}}/api/locations/districts"
+          }
+        },
+        {
+          "name": "Create Sector",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["const json = pm.response.json();", "pm.collectionVariables.set('sectorId', json.id);"] } }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"code\": \"SEC{{runSuffix}}\",\n  \"name\": \"Byumba Demo {{runSuffix}}\",\n  \"districtCode\": \"DST{{runSuffix}}\"\n}" },
+            "url": "{{baseUrl}}/api/locations/sectors"
+          }
+        },
+        {
+          "name": "Create Cell",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["const json = pm.response.json();", "pm.collectionVariables.set('cellId', json.id);"] } }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"code\": \"CEL{{runSuffix}}\",\n  \"name\": \"Ngondore Demo {{runSuffix}}\",\n  \"sectorCode\": \"SEC{{runSuffix}}\"\n}" },
+            "url": "{{baseUrl}}/api/locations/cells"
+          }
+        },
+        {
+          "name": "Create Village",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["const json = pm.response.json();", "pm.collectionVariables.set('villageId', json.id);"] } }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"code\": \"VLG{{runSuffix}}\",\n  \"name\": \"Kabeza Demo {{runSuffix}}\",\n  \"cellCode\": \"CEL{{runSuffix}}\"\n}" },
+            "url": "{{baseUrl}}/api/locations/villages"
+          }
+        },
+        {
+          "name": "Get Provinces",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/locations/provinces" }
+        },
+        {
+          "name": "Get Village By Id",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/locations/villages/{{villageId}}" }
+        },
+        {
+          "name": "Put Village",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"code\": \"VLG{{runSuffix}}\",\n  \"name\": \"Kabeza Updated {{runSuffix}}\",\n  \"cellCode\": \"CEL{{runSuffix}}\"\n}" },
+            "url": "{{baseUrl}}/api/locations/villages/{{villageId}}"
+          }
+        },
+        {
+          "name": "Patch Province",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Northern Province Patched {{runSuffix}}\"\n}" },
+            "url": "{{baseUrl}}/api/locations/provinces/{{provinceId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Guides",
+      "item": [
+        {
+          "name": "Create Guide 1",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["const json = pm.response.json();", "pm.collectionVariables.set('guide1Id', json.id);"] } }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"guideCode\": \"GDE-1{{runSuffix}}\",\n  \"fullName\": \"Alice Mukamana\",\n  \"email\": \"alice.guide.{{runSuffix}}@example.com\",\n  \"phoneNumber\": \"0788000101\",\n  \"specialization\": \"Wildlife safaris\"\n}" },
+            "url": "{{baseUrl}}/api/guides"
+          }
+        },
+        {
+          "name": "Create Guide 2",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["const json = pm.response.json();", "pm.collectionVariables.set('guide2Id', json.id);"] } }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"guideCode\": \"GDE-2{{runSuffix}}\",\n  \"fullName\": \"Claude Niyonsaba\",\n  \"email\": \"claude.guide.{{runSuffix}}@example.com\",\n  \"phoneNumber\": \"0788000102\",\n  \"specialization\": \"Cultural heritage\"\n}" },
+            "url": "{{baseUrl}}/api/guides"
+          }
+        },
+        {
+          "name": "Create Guide 3",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["const json = pm.response.json();", "pm.collectionVariables.set('guide3Id', json.id);"] } }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"guideCode\": \"GDE-3{{runSuffix}}\",\n  \"fullName\": \"Diane Umutesi\",\n  \"email\": \"diane.guide.{{runSuffix}}@example.com\",\n  \"phoneNumber\": \"0788000103\",\n  \"specialization\": \"Hiking and trails\"\n}" },
+            "url": "{{baseUrl}}/api/guides"
+          }
+        },
+        { "name": "Get Guides", "request": { "method": "GET", "url": "{{baseUrl}}/api/guides" } },
+        { "name": "Patch Guide 2", "request": { "method": "PATCH", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"specialization\": \"Bird watching\"\n}" }, "url": "{{baseUrl}}/api/guides/{{guide2Id}}" } }
+      ]
+    },
+    {
+      "name": "3. Users",
+      "item": [
+        {
+          "name": "Create User 1",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["const json = pm.response.json();", "pm.collectionVariables.set('user1Id', json.id);"] } }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"userCode\": \"USR-1{{runSuffix}}\",\n  \"firstName\": \"Aline\",\n  \"lastName\": \"Uwase\",\n  \"email\": \"aline.user.{{runSuffix}}@example.com\",\n  \"phoneNumber\": \"0788000201\",\n  \"villageCode\": \"VLG{{runSuffix}}\",\n  \"profile\": {\n    \"nationalId\": \"1199988877766601\",\n    \"gender\": \"FEMALE\",\n    \"emergencyContact\": \"0788776601\",\n    \"passportNumber\": \"PA1001\"\n  }\n}" },
+            "url": "{{baseUrl}}/api/users"
+          }
+        },
+        {
+          "name": "Create User 2",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["const json = pm.response.json();", "pm.collectionVariables.set('user2Id', json.id);"] } }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"userCode\": \"USR-2{{runSuffix}}\",\n  \"firstName\": \"Kevin\",\n  \"lastName\": \"Mugisha\",\n  \"email\": \"kevin.user.{{runSuffix}}@example.com\",\n  \"phoneNumber\": \"0788000202\",\n  \"villageCode\": \"VLG{{runSuffix}}\",\n  \"profile\": {\n    \"nationalId\": \"1199988877766602\",\n    \"gender\": \"MALE\",\n    \"emergencyContact\": \"0788776602\",\n    \"passportNumber\": \"PA1002\"\n  }\n}" },
+            "url": "{{baseUrl}}/api/users"
+          }
+        },
+        {
+          "name": "Create User 3",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["const json = pm.response.json();", "pm.collectionVariables.set('user3Id', json.id);"] } }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"userCode\": \"USR-3{{runSuffix}}\",\n  \"firstName\": \"Sonia\",\n  \"lastName\": \"Iradukunda\",\n  \"email\": \"sonia.user.{{runSuffix}}@example.com\",\n  \"phoneNumber\": \"0788000203\",\n  \"villageCode\": \"VLG{{runSuffix}}\",\n  \"profile\": {\n    \"nationalId\": \"1199988877766603\",\n    \"gender\": \"FEMALE\",\n    \"emergencyContact\": \"0788776603\",\n    \"passportNumber\": \"PA1003\"\n  }\n}" },
+            "url": "{{baseUrl}}/api/users"
+          }
+        },
+        { "name": "Get Users", "request": { "method": "GET", "url": "{{baseUrl}}/api/users?page=0&size=10&sortBy=createdAt&direction=asc" } },
+        { "name": "Get Users By Province", "request": { "method": "GET", "url": "{{baseUrl}}/api/users/by-province?provinceCode=PRV{{runSuffix}}" } },
+        { "name": "Patch User 2", "request": { "method": "PATCH", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"email\": \"kevin.patch.{{runSuffix}}@example.com\",\n  \"phoneNumber\": \"0788777202\",\n  \"profile\": {\n    \"emergencyContact\": \"0788777711\"\n  }\n}" }, "url": "{{baseUrl}}/api/users/{{user2Id}}" } }
+      ]
+    },
+    {
+      "name": "4. Packages",
+      "item": [
+        {
+          "name": "Create Package 1",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["const json = pm.response.json();", "pm.collectionVariables.set('package1Id', json.id);"] } }],
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"packageCode\": \"PKG-1{{runSuffix}}\",\n  \"title\": \"Akagera Sunrise Safari {{runSuffix}}\",\n  \"description\": \"Early morning wildlife safari with game drive.\",\n  \"price\": 180,\n  \"durationInDays\": 1,\n  \"guideIds\": [{{guide1Id}}]\n}" }, "url": "{{baseUrl}}/api/packages" }
+        },
+        {
+          "name": "Create Package 2",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["const json = pm.response.json();", "pm.collectionVariables.set('package2Id', json.id);"] } }],
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"packageCode\": \"PKG-2{{runSuffix}}\",\n  \"title\": \"Kigali Culture Walk {{runSuffix}}\",\n  \"description\": \"City heritage tour covering museums, markets, and local food.\",\n  \"price\": 95,\n  \"durationInDays\": 1,\n  \"guideIds\": [{{guide2Id}}]\n}" }, "url": "{{baseUrl}}/api/packages" }
+        },
+        {
+          "name": "Create Package 3",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["const json = pm.response.json();", "pm.collectionVariables.set('package3Id', json.id);"] } }],
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"packageCode\": \"PKG-3{{runSuffix}}\",\n  \"title\": \"Lake Kivu Escape {{runSuffix}}\",\n  \"description\": \"Relaxing lakeside getaway with a boat ride and overnight stay.\",\n  \"price\": 320,\n  \"durationInDays\": 2,\n  \"guideIds\": [{{guide3Id}}]\n}" }, "url": "{{baseUrl}}/api/packages" }
+        },
+        { "name": "Get Packages", "request": { "method": "GET", "url": "{{baseUrl}}/api/packages?page=0&size=5&sortBy=price&direction=desc" } },
+        { "name": "Patch Package 3", "request": { "method": "PATCH", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"description\": \"Patch update with sunset boat ride included.\",\n  \"price\": 380,\n  \"guideIds\": [{{guide1Id}}, {{guide3Id}}]\n}" }, "url": "{{baseUrl}}/api/packages/{{package3Id}}" } }
+      ]
+    },
+    {
+      "name": "5. Bookings",
+      "item": [
+        {
+          "name": "Create Booking 1",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["const json = pm.response.json();", "pm.collectionVariables.set('booking1Id', json.id);"] } }],
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"bookingReference\": \"BKG-1{{runSuffix}}\",\n  \"userId\": {{user1Id}},\n  \"tourPackageId\": {{package1Id}},\n  \"travelDate\": \"{{travelDate1}}\",\n  \"numberOfPeople\": 2,\n  \"status\": \"CONFIRMED\"\n}" }, "url": "{{baseUrl}}/api/bookings" }
+        },
+        {
+          "name": "Create Booking 2",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["const json = pm.response.json();", "pm.collectionVariables.set('booking2Id', json.id);"] } }],
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"bookingReference\": \"BKG-2{{runSuffix}}\",\n  \"userId\": {{user2Id}},\n  \"tourPackageId\": {{package2Id}},\n  \"travelDate\": \"{{travelDate2}}\",\n  \"numberOfPeople\": 4,\n  \"status\": \"PENDING\"\n}" }, "url": "{{baseUrl}}/api/bookings" }
+        },
+        {
+          "name": "Create Booking 3",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["const json = pm.response.json();", "pm.collectionVariables.set('booking3Id', json.id);"] } }],
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"bookingReference\": \"BKG-3{{runSuffix}}\",\n  \"userId\": {{user3Id}},\n  \"tourPackageId\": {{package3Id}},\n  \"travelDate\": \"{{travelDate3}}\",\n  \"numberOfPeople\": 1,\n  \"status\": \"CANCELLED\"\n}" }, "url": "{{baseUrl}}/api/bookings" }
+        },
+        { "name": "Get Bookings", "request": { "method": "GET", "url": "{{baseUrl}}/api/bookings?page=0&size=5&sortBy=bookingDate&direction=desc" } },
+        { "name": "Patch Booking 2", "request": { "method": "PATCH", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"numberOfPeople\": 6,\n  \"status\": \"CANCELLED\"\n}" }, "url": "{{baseUrl}}/api/bookings/{{booking2Id}}" } }
+      ]
+    },
+    {
+      "name": "6. Cleanup",
+      "item": [
+        { "name": "Delete Booking 3", "request": { "method": "DELETE", "url": "{{baseUrl}}/api/bookings/{{booking3Id}}" } },
+        { "name": "Delete Booking 2", "request": { "method": "DELETE", "url": "{{baseUrl}}/api/bookings/{{booking2Id}}" } },
+        { "name": "Delete Booking 1", "request": { "method": "DELETE", "url": "{{baseUrl}}/api/bookings/{{booking1Id}}" } },
+        { "name": "Delete Package 3", "request": { "method": "DELETE", "url": "{{baseUrl}}/api/packages/{{package3Id}}" } },
+        { "name": "Delete Package 2", "request": { "method": "DELETE", "url": "{{baseUrl}}/api/packages/{{package2Id}}" } },
+        { "name": "Delete Package 1", "request": { "method": "DELETE", "url": "{{baseUrl}}/api/packages/{{package1Id}}" } },
+        { "name": "Delete User 3", "request": { "method": "DELETE", "url": "{{baseUrl}}/api/users/{{user3Id}}" } },
+        { "name": "Delete User 2", "request": { "method": "DELETE", "url": "{{baseUrl}}/api/users/{{user2Id}}" } },
+        { "name": "Delete User 1", "request": { "method": "DELETE", "url": "{{baseUrl}}/api/users/{{user1Id}}" } },
+        { "name": "Delete Guide 3", "request": { "method": "DELETE", "url": "{{baseUrl}}/api/guides/{{guide3Id}}" } },
+        { "name": "Delete Guide 2", "request": { "method": "DELETE", "url": "{{baseUrl}}/api/guides/{{guide2Id}}" } },
+        { "name": "Delete Guide 1", "request": { "method": "DELETE", "url": "{{baseUrl}}/api/guides/{{guide1Id}}" } },
+        { "name": "Delete Village", "request": { "method": "DELETE", "url": "{{baseUrl}}/api/locations/villages/{{villageId}}" } },
+        { "name": "Delete Cell", "request": { "method": "DELETE", "url": "{{baseUrl}}/api/locations/cells/{{cellId}}" } },
+        { "name": "Delete Sector", "request": { "method": "DELETE", "url": "{{baseUrl}}/api/locations/sectors/{{sectorId}}" } },
+        { "name": "Delete District", "request": { "method": "DELETE", "url": "{{baseUrl}}/api/locations/districts/{{districtId}}" } },
+        { "name": "Delete Province", "request": { "method": "DELETE", "url": "{{baseUrl}}/api/locations/provinces/{{provinceId}}" } }
+      ]
+    }
+  ]
+}

@@ -15,7 +15,7 @@
     <artifactId>tour_booking</artifactId>
     <version>1.0.0</version>
     <name>tour_booking</name>
-    <description>Tour Booking System with Rwanda Administrative Location Hierarchy</description>
+    <description>A Spring Boot REST API for managing tour locations, users, guides, packages, and bookings.</description>
 
     <properties>
         <maven.compiler.release>17</maven.compiler.release>
@@ -42,25 +42,10 @@
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
         </dependency>
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>runtime</scope>
-        </dependency>
     </dependencies>
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <release>${maven.compiler.release}</release>
-                    <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.target}</target>
-                    <parameters>true</parameters>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>

@@ -3,3 +3,6 @@ target/
 m2repo/
 temp_log4j_check/
 .mvn-settings.xml
+data/
+*.mv.db
+*.trace.db

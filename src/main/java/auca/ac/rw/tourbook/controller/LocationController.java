@@ -35,17 +35,17 @@ public class LocationController {
     }
 
     @GetMapping("/province/{provinceName}")
-    public ResponseEntity<List<Location>> getAllLocationsByProvince(@PathVariable String provinceName) {
+    public ResponseEntity<List<Location>> getAllLocationsByProvince(@PathVariable("provinceName") String provinceName) {
         return ResponseEntity.ok(locationService.getAllLocationsByProvince(provinceName));
     }
 
     @GetMapping("/type/{type}")
-    public ResponseEntity<List<Location>> getLocationsByType(@PathVariable LocationType type) {
+    public ResponseEntity<List<Location>> getLocationsByType(@PathVariable("type") LocationType type) {
         return ResponseEntity.ok(locationService.getLocationsByType(type));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Location> getLocationById(@PathVariable Long id) {
+    public ResponseEntity<Location> getLocationById(@PathVariable("id") Long id) {
         return locationService.getLocationById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
@@ -53,18 +53,21 @@ public class LocationController {
 
     @PostMapping(value = "/save", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> saveLocation(@Valid @RequestBody Location location,
-                                          @RequestParam(required = false) Long parentId) {
+                                          @RequestParam(value = "parentId", required = false) Long parentId) {
         Object response = locationService.saveChildLocation(location, parentId);
         if (response instanceof Location) {
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        if (response.toString().contains("not found")) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+        return ResponseEntity.badRequest().body(response);
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> updateLocation(@PathVariable Long id,
+    public ResponseEntity<?> updateLocation(@PathVariable("id") Long id,
                                             @Valid @RequestBody Location location,
-                                            @RequestParam(required = false) Long parentId) {
+                                            @RequestParam(value = "parentId", required = false) Long parentId) {
         Object response = locationService.updateLocation(id, location, parentId);
         if (response instanceof Location) {
             return ResponseEntity.ok(response);
@@ -76,7 +79,7 @@ public class LocationController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteLocation(@PathVariable Long id) {
+    public ResponseEntity<String> deleteLocation(@PathVariable("id") Long id) {
         String result = locationService.deleteLocation(id);
         return result.startsWith("Error:")
                 ? ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result)

@@ -31,8 +31,8 @@ public class BookingController {
     }
 
     @PostMapping("/booking/place/{userId}/{tourPackageId}")
-    public ResponseEntity<String> placeBooking(@PathVariable Long userId,
-                                               @PathVariable Long tourPackageId,
+    public ResponseEntity<String> placeBooking(@PathVariable("userId") Long userId,
+                                               @PathVariable("tourPackageId") Long tourPackageId,
                                                @Valid @RequestBody Booking booking) {
         String result = bookingService.placeBooking(userId, tourPackageId, booking);
         return result.startsWith("Error:")
@@ -41,21 +41,21 @@ public class BookingController {
     }
 
     @GetMapping("/booking/all")
-    public ResponseEntity<Page<Booking>> getAllBookings(@RequestParam(defaultValue = "0") int page,
-                                                        @RequestParam(defaultValue = "10") int size,
-                                                        @RequestParam(defaultValue = "bookingDate") String sortBy) {
+    public ResponseEntity<Page<Booking>> getAllBookings(@RequestParam(value = "page", defaultValue = "0") int page,
+                                                        @RequestParam(value = "size", defaultValue = "10") int size,
+                                                        @RequestParam(value = "sortBy", defaultValue = "bookingDate") String sortBy) {
         return ResponseEntity.ok(bookingService.getAllBookings(page, size, sortBy));
     }
 
     @GetMapping("/booking/{id}")
-    public ResponseEntity<Booking> getBookingById(@PathVariable Long id) {
+    public ResponseEntity<Booking> getBookingById(@PathVariable("id") Long id) {
         return bookingService.getBookingById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
     }
 
     @GetMapping("/booking/user/{userId}")
-    public ResponseEntity<List<Booking>> getBookingsByUserId(@PathVariable Long userId) {
+    public ResponseEntity<List<Booking>> getBookingsByUserId(@PathVariable("userId") Long userId) {
         List<Booking> bookings = bookingService.getBookingsByUserId(userId);
         if (bookings.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
@@ -64,10 +64,10 @@ public class BookingController {
     }
 
     @PutMapping("/booking/update/{id}")
-    public ResponseEntity<Booking> updateBooking(@PathVariable Long id,
+    public ResponseEntity<Booking> updateBooking(@PathVariable("id") Long id,
                                                  @Valid @RequestBody Booking booking,
-                                                 @RequestParam(required = false) Long userId,
-                                                 @RequestParam(required = false) Long tourPackageId) {
+                                                 @RequestParam(value = "userId", required = false) Long userId,
+                                                 @RequestParam(value = "tourPackageId", required = false) Long tourPackageId) {
         Booking updatedBooking = bookingService.updateBooking(id, booking, userId, tourPackageId);
         if (updatedBooking == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
@@ -76,13 +76,14 @@ public class BookingController {
     }
 
     @PatchMapping("/booking/status/{id}")
-    public ResponseEntity<Booking> updateBookingStatus(@PathVariable Long id, @RequestParam BookingStatus status) {
+    public ResponseEntity<Booking> updateBookingStatus(@PathVariable("id") Long id,
+                                                       @RequestParam("status") BookingStatus status) {
         Booking updatedBooking = bookingService.updateBookingStatus(id, status);
         return updatedBooking != null ? ResponseEntity.ok(updatedBooking) : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/booking/delete/{id}")
-    public ResponseEntity<String> deleteBooking(@PathVariable Long id) {
+    public ResponseEntity<String> deleteBooking(@PathVariable("id") Long id) {
         String result = bookingService.deleteBooking(id);
         return result.startsWith("Error:")
                 ? ResponseEntity.status(HttpStatus.NOT_FOUND).body(result)

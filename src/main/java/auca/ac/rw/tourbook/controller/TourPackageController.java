@@ -30,7 +30,7 @@ public class TourPackageController {
 
     @PostMapping("/package/save")
     public ResponseEntity<?> savePackage(@Valid @RequestBody TourPackage tourPackage,
-                                         @RequestParam(required = false) List<Long> guideIds) {
+                                         @RequestParam(value = "guideIds", required = false) List<Long> guideIds) {
         Object response = tourPackageService.savePackage(tourPackage, guideIds);
         if (response instanceof TourPackage) {
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -39,23 +39,23 @@ public class TourPackageController {
     }
 
     @GetMapping("/packages/all")
-    public ResponseEntity<Page<TourPackage>> getAllPackages(@RequestParam(defaultValue = "0") int page,
-                                                            @RequestParam(defaultValue = "10") int size,
-                                                            @RequestParam(defaultValue = "id") String sortBy) {
+    public ResponseEntity<Page<TourPackage>> getAllPackages(@RequestParam(value = "page", defaultValue = "0") int page,
+                                                            @RequestParam(value = "size", defaultValue = "10") int size,
+                                                            @RequestParam(value = "sortBy", defaultValue = "id") String sortBy) {
         return ResponseEntity.ok(tourPackageService.getAllPackages(page, size, sortBy));
     }
 
     @GetMapping("/package/{id}")
-    public ResponseEntity<TourPackage> getPackageById(@PathVariable Long id) {
+    public ResponseEntity<TourPackage> getPackageById(@PathVariable("id") Long id) {
         return tourPackageService.getPackageById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
     }
 
     @PutMapping("/package/update/{id}")
-    public ResponseEntity<?> updatePackage(@PathVariable Long id,
+    public ResponseEntity<?> updatePackage(@PathVariable("id") Long id,
                                            @Valid @RequestBody TourPackage tourPackage,
-                                           @RequestParam(required = false) List<Long> guideIds) {
+                                           @RequestParam(value = "guideIds", required = false) List<Long> guideIds) {
         Object response = tourPackageService.updatePackage(id, tourPackage, guideIds);
         if (response instanceof TourPackage) {
             return ResponseEntity.ok(response);
@@ -67,7 +67,7 @@ public class TourPackageController {
     }
 
     @DeleteMapping("/package/delete/{id}")
-    public ResponseEntity<String> deletePackage(@PathVariable Long id) {
+    public ResponseEntity<String> deletePackage(@PathVariable("id") Long id) {
         String result = tourPackageService.deletePackage(id);
         return result.startsWith("Error:")
                 ? ResponseEntity.status(HttpStatus.NOT_FOUND).body(result)

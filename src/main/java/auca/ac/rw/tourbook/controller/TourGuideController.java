@@ -41,14 +41,14 @@ public class TourGuideController {
     }
 
     @GetMapping("/guide/{id}")
-    public ResponseEntity<TourGuide> getGuideById(@PathVariable Long id) {
+    public ResponseEntity<TourGuide> getGuideById(@PathVariable("id") Long id) {
         return tourGuideService.getGuideById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
     }
 
     @PutMapping("/guide/update/{id}")
-    public ResponseEntity<?> updateGuide(@PathVariable Long id, @Valid @RequestBody TourGuide guide) {
+    public ResponseEntity<?> updateGuide(@PathVariable("id") Long id, @Valid @RequestBody TourGuide guide) {
         Object response = tourGuideService.updateGuide(id, guide);
         if (response instanceof TourGuide) {
             return ResponseEntity.ok(response);
@@ -60,7 +60,7 @@ public class TourGuideController {
     }
 
     @DeleteMapping("/guide/delete/{id}")
-    public ResponseEntity<String> deleteGuide(@PathVariable Long id) {
+    public ResponseEntity<String> deleteGuide(@PathVariable("id") Long id) {
         String result = tourGuideService.deleteGuide(id);
         return result.startsWith("Error:")
                 ? ResponseEntity.status(HttpStatus.NOT_FOUND).body(result)

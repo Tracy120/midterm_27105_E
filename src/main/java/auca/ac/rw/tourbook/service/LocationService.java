@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@SuppressWarnings("all")
 public class LocationService {
 
     private final LocationRepository locationRepository;
@@ -165,7 +164,7 @@ public class LocationService {
 
         LocationType expectedParentType = getExpectedParentType(type);
         if (parent.getType() != expectedParentType) {
-            return "Error: " + type + " must belong to a " + expectedParentType + ".";
+            return buildParentTypeError(type, expectedParentType);
         }
         return parent;
     }
@@ -192,5 +191,14 @@ public class LocationService {
             return LocationType.CELL;
         }
         return null;
+    }
+
+    private String buildParentTypeError(LocationType type, LocationType expectedParentType) {
+        StringBuilder message = new StringBuilder("Error: ");
+        message.append(type);
+        message.append(" must belong to a ");
+        message.append(expectedParentType);
+        message.append('.');
+        return message.toString();
     }
 }
